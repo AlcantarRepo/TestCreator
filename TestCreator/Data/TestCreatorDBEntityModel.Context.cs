@@ -12,6 +12,8 @@ namespace TestCreator.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class TestCreatorEntities : DbContext
     {
@@ -25,5 +27,14 @@ namespace TestCreator.Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<Stanowiska> Stanowiska { get; set; }
+        public virtual DbSet<Testy> Testy { get; set; }
+        public virtual DbSet<Uzytkownicy> Uzytkownicy { get; set; }
+    
+        public virtual ObjectResult<SysUsersContener> GetAllUsers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SysUsersContener>("GetAllUsers");
+        }
     }
 }

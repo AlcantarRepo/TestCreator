@@ -1,0 +1,83 @@
+﻿@model TestCreator.Models.TestUser
+
+<div id="regModal" class="modal fade" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Rejestracja</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row main">
+                    <div class="main-login main-center">
+
+                        <form id="regiserForm">
+
+                            <div class="form-group">
+                                <label for="name" class="cols-sm-2 control-label">Imię: </label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = "Podaj Imię" })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="cols-sm-2 control-label">Email: </label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                        @Html.TextBoxFor(model => model.Mail, new { @class = "form-control", @placeholder = "Podaj Email" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="username" class="cols-sm-2 control-label">Nazwa Użytkownika</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "Podaj Login" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="cols-sm-2 control-label">Hasło</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Podaj Hasło" })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirm" class="cols-sm-2 control-label">Potwierdź Hasło</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                        @Html.TextBoxFor(model => model.Repassword, new { @class = "form-control", @placeholder = "Podaj ponownie Hasło" })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <button type="button" id="regButton" class="btn btn-primary btn-lg btn-block login-button" style="width: 60%; margin: auto">Rejestruj</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">zamknij</button>
+            </div>
+        </div>
+    </div>
+</div>
+

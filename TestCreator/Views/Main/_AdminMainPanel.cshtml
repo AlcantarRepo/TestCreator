@@ -1,0 +1,37 @@
+﻿<table class="table table-responsive">
+    <tr>
+        <th>Nazwa użytkownika</th>
+        <th>Login</th>
+        <th>Rola</th>
+        <th>Data dodania</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+
+    <tbody>
+        @if (ViewBag.UsersList != null)
+        {
+            foreach (var item in ViewBag.UsersList)
+            {
+                <tr id="row_@item.UserId">
+                    <td>@item.FirstName</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Role</td>
+                    <td>@item.AddedTimeString</td>
+                    <td><a href="#" class="btn btn-danger" ><i class="glyphicon glyphicon-pencil "></i></a></td>
+                    <td><a href="#" class="btn btn-danger" ><i class="glyphicon glyphicon-trash"></i></a></td>
+                </tr>
+            }
+        }
+        @*<tr id="data">
+            <td>as</td>
+            <td>as</td>
+            <td>as</td>
+            <td>as</td>
+            <td><a href="#" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a></td>
+            <td><a href="#" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i></a></td>
+        </tr>*@
+    </tbody>
+</table>
+

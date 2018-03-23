@@ -4,7 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d06df680f6464ecb894e2759ed4d5e51" Name="Diagram1" />
+      <Diagram DiagramId="d06df680f6464ecb894e2759ed4d5e51" Name="Diagram1" >
+        <EntityTypeShape EntityType="TestCreatorModel.Role" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="TestCreatorModel.Stanowiska" Width="1.5" PointX="0.75" PointY="5.125" />
+        <EntityTypeShape EntityType="TestCreatorModel.Testy" Width="1.5" PointX="3" PointY="4.875" />
+        <EntityTypeShape EntityType="TestCreatorModel.Uzytkownicy" Width="1.5" PointX="3" PointY="0.875" />
+        <AssociationConnector Association="TestCreatorModel.FK_Uzytkownicy_Role" />
+        <AssociationConnector Association="TestCreatorModel.FK_Testy_Stanowiska" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

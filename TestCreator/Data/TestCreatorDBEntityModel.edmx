@@ -4,20 +4,262 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TestCreatorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="TestCreatorModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="TestCreatorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_rola" />
+          </Key>
+          <Property Name="id_rola" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="is_visible" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stanowiska">
+          <Key>
+            <PropertyRef Name="id_stanowisko" />
+          </Key>
+          <Property Name="id_stanowisko" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa_stanowiska" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="is_visible" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Testy">
+          <Key>
+            <PropertyRef Name="id_test" />
+          </Key>
+          <Property Name="id_test" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="data_stworzenia" Type="date" />
+          <Property Name="is_visible" Type="bit" Nullable="false" />
+          <Property Name="id_stanowisko" Type="int" />
+        </EntityType>
+        <EntityType Name="Uzytkownicy">
+          <Key>
+            <PropertyRef Name="id_uzytkownik" />
+          </Key>
+          <Property Name="id_uzytkownik" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="haslo" Type="nchar" MaxLength="255" Nullable="false" />
+          <Property Name="is_visible" Type="bit" Nullable="false" />
+          <Property Name="id_rola" Type="int" />
+          <Property Name="data_dodania" Type="datetime" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Testy_Stanowiska">
+          <End Role="Stanowiska" Type="Self.Stanowiska" Multiplicity="0..1" />
+          <End Role="Testy" Type="Self.Testy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanowiska">
+              <PropertyRef Name="id_stanowisko" />
+            </Principal>
+            <Dependent Role="Testy">
+              <PropertyRef Name="id_stanowisko" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uzytkownicy_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Uzytkownicy" Type="Self.Uzytkownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id_rola" />
+            </Principal>
+            <Dependent Role="Uzytkownicy">
+              <PropertyRef Name="id_rola" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sc_getAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="TestCreatorModelStoreContainer">
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stanowiska" EntityType="Self.Stanowiska" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Testy" EntityType="Self.Testy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uzytkownicy" EntityType="Self.Uzytkownicy" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Testy_Stanowiska" Association="Self.FK_Testy_Stanowiska">
+            <End Role="Stanowiska" EntitySet="Stanowiska" />
+            <End Role="Testy" EntitySet="Testy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uzytkownicy_Role" Association="Self.FK_Uzytkownicy_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Uzytkownicy" EntitySet="Uzytkownicy" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TestCreatorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="TestCreatorEntities" annotation:LazyLoadingEnabled="true" />
+        <EntityContainer Name="TestCreatorEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Role" EntityType="TestCreatorModel.Role" />
+          <EntitySet Name="Stanowiska" EntityType="TestCreatorModel.Stanowiska" />
+          <EntitySet Name="Testy" EntityType="TestCreatorModel.Testy" />
+          <EntitySet Name="Uzytkownicy" EntityType="TestCreatorModel.Uzytkownicy" />
+          <AssociationSet Name="FK_Uzytkownicy_Role" Association="TestCreatorModel.FK_Uzytkownicy_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Uzytkownicy" EntitySet="Uzytkownicy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Testy_Stanowiska" Association="TestCreatorModel.FK_Testy_Stanowiska">
+            <End Role="Stanowiska" EntitySet="Stanowiska" />
+            <End Role="Testy" EntitySet="Testy" />
+          </AssociationSet>
+          <FunctionImport Name="GetAllUsers" ReturnType="Collection(TestCreatorModel.SysUsersContener)" />
+        </EntityContainer>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_rola" />
+          </Key>
+          <Property Name="id_rola" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="is_visible" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Uzytkownicy" Relationship="TestCreatorModel.FK_Uzytkownicy_Role" FromRole="Role" ToRole="Uzytkownicy" />
+        </EntityType>
+        <EntityType Name="Stanowiska">
+          <Key>
+            <PropertyRef Name="id_stanowisko" />
+          </Key>
+          <Property Name="id_stanowisko" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa_stanowiska" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="is_visible" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Testy" Relationship="TestCreatorModel.FK_Testy_Stanowiska" FromRole="Stanowiska" ToRole="Testy" />
+        </EntityType>
+        <EntityType Name="Testy">
+          <Key>
+            <PropertyRef Name="id_test" />
+          </Key>
+          <Property Name="id_test" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="data_stworzenia" Type="DateTime" Precision="0" />
+          <Property Name="is_visible" Type="Boolean" Nullable="false" />
+          <Property Name="id_stanowisko" Type="Int32" />
+          <NavigationProperty Name="Stanowiska" Relationship="TestCreatorModel.FK_Testy_Stanowiska" FromRole="Testy" ToRole="Stanowiska" />
+        </EntityType>
+        <EntityType Name="Uzytkownicy">
+          <Key>
+            <PropertyRef Name="id_uzytkownik" />
+          </Key>
+          <Property Name="id_uzytkownik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="haslo" Type="String" Nullable="false" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="is_visible" Type="Boolean" Nullable="false" />
+          <Property Name="id_rola" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="TestCreatorModel.FK_Uzytkownicy_Role" FromRole="Uzytkownicy" ToRole="Role" />
+          <Property Name="data_dodania" Type="DateTime" Precision="3" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Uzytkownicy_Role">
+          <End Type="TestCreatorModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="TestCreatorModel.Uzytkownicy" Role="Uzytkownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id_rola" />
+            </Principal>
+            <Dependent Role="Uzytkownicy">
+              <PropertyRef Name="id_rola" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Testy_Stanowiska">
+          <End Type="TestCreatorModel.Stanowiska" Role="Stanowiska" Multiplicity="0..1" />
+          <End Type="TestCreatorModel.Testy" Role="Testy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanowiska">
+              <PropertyRef Name="id_stanowisko" />
+            </Principal>
+            <Dependent Role="Testy">
+              <PropertyRef Name="id_stanowisko" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sc_getAllUsers_Result">
+          <Property Type="Int32" Name="id_uzytkownik" Nullable="false" />
+          <Property Type="String" Name="login" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="haslo" Nullable="false" MaxLength="255" />
+          <Property Type="Boolean" Name="is_visible" Nullable="false" />
+          <Property Type="Int32" Name="id_rola" Nullable="true" />
+          <Property Type="DateTime" Name="data_dodania" Nullable="true" Precision="23" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="id_rola1" Nullable="false" />
+          <Property Type="String" Name="nazwa" Nullable="false" MaxLength="15" />
+          <Property Type="Boolean" Name="is_visible1" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="AllUsersContener">
+          <Property Type="Int32" Name="id_uzytkownik" Nullable="false" />
+          <Property Type="String" Name="login" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="haslo" Nullable="false" MaxLength="255" />
+          <Property Type="Boolean" Name="is_visible" Nullable="false" />
+          <Property Type="Int32" Name="id_rola" Nullable="true" />
+          <Property Type="DateTime" Name="data_dodania" Nullable="true" Precision="23" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="id_rola1" Nullable="false" />
+          <Property Type="String" Name="nazwa" Nullable="false" MaxLength="15" />
+          <Property Type="Boolean" Name="is_visible1" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SysUsersContener">
+          <Property Type="Int32" Name="id_uzytkownik" Nullable="false" />
+          <Property Type="DateTime" Name="data_dodania" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="is_visible" Nullable="false" />
+          <Property Type="String" Name="login" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nazwa" Nullable="false" MaxLength="15" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TestCreatorModelStoreContainer" CdmEntityContainer="TestCreatorEntities" />
+        <EntityContainerMapping StorageEntityContainer="TestCreatorModelStoreContainer" CdmEntityContainer="TestCreatorEntities" >
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="TestCreatorModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="is_visible" ColumnName="is_visible" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="id_rola" ColumnName="id_rola" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stanowiska">
+            <EntityTypeMapping TypeName="TestCreatorModel.Stanowiska">
+              <MappingFragment StoreEntitySet="Stanowiska">
+                <ScalarProperty Name="is_visible" ColumnName="is_visible" />
+                <ScalarProperty Name="nazwa_stanowiska" ColumnName="nazwa_stanowiska" />
+                <ScalarProperty Name="id_stanowisko" ColumnName="id_stanowisko" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Testy">
+            <EntityTypeMapping TypeName="TestCreatorModel.Testy">
+              <MappingFragment StoreEntitySet="Testy">
+                <ScalarProperty Name="id_stanowisko" ColumnName="id_stanowisko" />
+                <ScalarProperty Name="is_visible" ColumnName="is_visible" />
+                <ScalarProperty Name="data_stworzenia" ColumnName="data_stworzenia" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="id_test" ColumnName="id_test" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uzytkownicy">
+            <EntityTypeMapping TypeName="TestCreatorModel.Uzytkownicy">
+              <MappingFragment StoreEntitySet="Uzytkownicy">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="data_dodania" ColumnName="data_dodania" />
+                <ScalarProperty Name="id_rola" ColumnName="id_rola" />
+                <ScalarProperty Name="is_visible" ColumnName="is_visible" />
+                <ScalarProperty Name="haslo" ColumnName="haslo" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="id_uzytkownik" ColumnName="id_uzytkownik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAllUsers" FunctionName="TestCreatorModel.Store.sc_getAllUsers">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="TestCreatorModel.SysUsersContener">
+                <ScalarProperty Name="id_uzytkownik" ColumnName="id_uzytkownik" />
+                <ScalarProperty Name="data_dodania" ColumnName="data_dodania" />
+                <ScalarProperty Name="is_visible" ColumnName="is_visible" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
